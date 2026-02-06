@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <script>
+      window.addEventListener("message", function(event) {
+        // Проверка типа сообщения от Glide
+        if (event.data.type === "run") {
+          const p1 = event.data.body.values.p1 || "";
+          const p2 = event.data.body.values.p2 || "";
+          
+          // Ваша логика поиска
+          const result = p1.toLowerCase().includes(p2.toLowerCase().trim());
+
+          // Отправка ответа обратно
+          event.source.postMessage({
+            type: "result",
+            body: result
+          }, event.origin);
+        }
+      });
+    </script>
+  </head>
+  <body></body>
+</html>
