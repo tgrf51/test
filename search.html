@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <script>
+    window.addEventListener("message", (event) => {
+      const { type, body } = event.data;
+      if (type === "run") {
+        const p1 = body.values.p1; // Metadata
+        const p2 = body.values.p2; // Search Input
+        let result = false;
+
+        if (!p2 || p2.trim() === "") {
+          result = true;
+        } else if (!p1) {
+          result = false;
+        } else {
+          const query = p2.toLowerCase().trim();
+          const target = p1.toLowerCase();
+          if (query.length > 3 || query.includes(" ")) {
+            if (target.includes(query)) result = true;
+          }
+          if (!result) {
+            const words = target.split(/[^a-zа-яё0-9]+/i);
+            result = words.some(word => word.startsWith(query));
+          }
+        }
+        event.source.postMessage({ type: "result", body: result }, event.origin);
+      }
+    });
+  </script>
+</head>
+<body></body>
+</html>
