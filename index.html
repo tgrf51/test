@@ -5,6 +5,7 @@
 </head>
 <body>
   <script>
+    // Слушаем данные от Glide
     window.addEventListener("message", (event) => {
       const { type, body } = event.data;
       if (type === "run") {
@@ -18,14 +19,17 @@
         if (query === "") {
           result = true;
         } else if (target !== "") {
+          // 1. Поиск фразы
           if (query.length > 3 || query.includes(" ")) {
             if (target.includes(query)) result = true;
           }
+          // 2. Поиск по началу слов
           if (!result) {
             const words = target.split(/[^a-zа-яё0-9]+/i);
             result = words.some(word => word.startsWith(query));
           }
         }
+        // Отправляем результат обратно в Glide
         event.source.postMessage({ type: "result", body: result }, event.origin);
       }
     });
