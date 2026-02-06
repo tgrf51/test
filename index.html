@@ -8,16 +8,14 @@
         if (type === "run") {
           const p1 = body.values.p1 || "";
           const p2 = body.values.p2 || "";
-          
           let result = false;
+
           const query = p2.toLowerCase().trim();
           const target = p1.toLowerCase();
 
           if (query === "") {
             result = true;
-          } else if (target === "") {
-            result = false;
-          } else {
+          } else if (target !== "") {
             if (query.length > 3 || query.includes(" ")) {
               if (target.includes(query)) result = true;
             }
@@ -26,6 +24,7 @@
               result = words.some(word => word.startsWith(query));
             }
           }
+
           event.source.postMessage({ type: "result", body: result }, event.origin);
         }
       });
