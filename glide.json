@@ -2,6 +2,7 @@
   "name": "Custom Search",
   "description": "Поиск по началу слов и фразам",
   "author": "tgrf51",
+  "main": "index.html",
   "params": [
     {
       "id": "p1",
